@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Memorable Adventure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a0b2e 0%, #3d1f5c 50%, #5b2c83 100%);
+            color: #f0e6ff;
+            line-height: 1.8;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(139, 69, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .unicorn-emoji {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #da70ff, #a855f7, #da70ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .infinity-stones {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stone {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 0 20px currentColor;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .stone:nth-child(1) { background: #9b59b6; color: white; }
+        .stone:nth-child(2) { background: #e74c3c; color: white; }
+        .stone:nth-child(3) { background: #3498db; color: white; }
+        .stone:nth-child(4) { background: #f39c12; color: white; }
+        .stone:nth-child(5) { background: #1abc9c; color: white; }
+        .stone:nth-child(6) { background: #e67e22; color: white; }
+        .stone:nth-child(7) { background: #2ecc71; color: white; }
+
+        .content {
+            font-size: 1.1em;
+            margin: 30px 0;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .highlight {
+            color: #da70ff;
+            font-weight: 600;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 40px;
+            font-size: 1.2em;
+            color: #da70ff;
+        }
+
+        .sparkle {
+            display: inline-block;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .reveal-button {
+            display: block;
+            margin: 40px auto 20px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #a855f7, #da70ff);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .reveal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(168, 85, 247, 0.6);
+        }
+
+        .reveal-button:active {
+            transform: translateY(0);
+        }
+
+        .hidden-section {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: rgba(218, 112, 255, 0.1);
+            border-radius: 15px;
+            border: 2px solid rgba(218, 112, 255, 0.3);
+        }
+
+        .hidden-section.revealed {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden-section h2 {
+            color: #da70ff;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .hidden-section ol {
+            text-align: left;
+            margin-left: 20px;
+            line-height: 2;
+        }
+
+        .hidden-section li {
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                font-size: 1em;
+            }
+
+            .unicorn-emoji {
+                font-size: 48px;
+            }
+
+            .stone {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="unicorn-emoji">🦄</div>
+            <h1>A Memorable Adventure</h1>
+            <div class="infinity-stones">
+                <div class="stone">N</div>
+                <div class="stone">C</div>
+                <div class="stone">U</div>
+                <div class="stone">R</div>
+                <div class="stone">O</div>
+                <div class="stone">I</div>
+                <div class="stone">N</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <p>
+                <span class="highlight">Soo!! 🎬</span> This was supposed to be a really exciting adventure. First of all, you were supposed to pull out your phone 📱, fire up the front facing camera and being to chronicle this experience from start to finish.
+            </p>
+
+            <p>
+                The original idea was a treasure hunt across Nevis 🗺️, where you'd collect <span class="highlight">7 jars—like Infinity Stones 💎</span>—from 7 different locations of sentimental value to us, each one revealing a piece of what makes you a Unicorn 🦄. Like...I was going <span class="highlight">ALL out</span> for that but…realized we had not created enough experiences in Nevis across 7 locations 😅. So I pivoted to giving you 4 jars up front, and clues to find the other 3 🔍, each with clues to find the next subsequent one.
+            </p>
+
+            <p>
+                You were literally supposed to record yourself and vlog your experience 🎥 driving to each location 🚗, with clues, searching, asking, etc…and eventually compiling all of them for keepsake!! 📽️
+            </p>
+
+            <p>
+                But then again, I had to take a few steps back 🤔 and wonder just how you would receive a gesture like this, seeing that we really dont talk any more 📵. Its kinda felt like asking you to drive around the island right now on a full-blown treasure hunt mightn't feel like a gift 🎁, and instead, could feel like unforced and unwanted pressure.
+            </p>
+
+            <p>
+                So!! I pivoted yet again and decided to give you all 7 at once, while still leaving you with the clues 📝.
+            </p>
+
+            <p>
+                So even though you're getting all 7 jars delivered instead of collecting them across the island, I hope this page gives you a glimpse of what I wanted to create for you and hope the thought will count for something, whether it's a thought that says <span class="highlight">"OMG!! I WOULDA LOVED THIS" 😍</span> or <span class="highlight">"THANKS FOR SPARING ME THE ANGUISH OF THIS TYPE OF THING KNOWING WHERE WE ARE RIGHT NOW!!" 😅</span>. Eitherway, it should count for something (You dont' need to let me know which way you are leaning).
+            </p>
+
+            <p>
+                The adventure ✨. The memories 💭. The affirmation 💜. The magic 🌟.
+            </p>
+
+            <p>
+                You deserve all of it. Even if life took us in different directions 🛤️.
+            </p>
+
+            <p>
+                This is me following through ✅. Not because I need anything from you. But because I said to myself that I would. And because you're worth it 💎. And plus, you always look so pretty when you smile!! 😊 <span class="sparkle">✨</span>
+            </p>
+
+            <p style="margin-top: 30px; font-style: italic; color: #da70ff;">
+                P.S. The stones actually glow in the dark 🌙✨
+            </p>
+
+            <p style="margin-top: 25px; text-align: center; color: #f0e6ff; font-size: 0.95em;">
+                📖 <em>After you've read all 7 cards in the jars, click below to see what the FULL adventure would have been...</em> 👇
+            </p>
+
+            <button class="reveal-button" onclick="revealSection()">
+                ✨ If I Could Have Done All 7... ✨
+            </button>
+
+            <div class="hidden-section" id="hiddenSection">
+                <h2>These would be the other 4 locations:</h2>
+                <ol>
+                    <li><strong>Arthurs Restaurant</strong> 🍽️<br>Yup! You woulda had to cross the narrows for this</li>
+                    <li><strong>Oualie Water Taxi Terminal</strong> ⛵<br>Definitely this facilitated much of our experiences together!</li>
+                    <li><strong>The heritage place you took me to during the lunch hour</strong> 🏛️<br>(I forgot the name)</li>
+                    <li><strong>Hmm...this might have lead you to some adventure that lead you to some restaurant with dinner reservations, complete with a saxophonist!!</strong> 🎷✨<br>Yup!! I woulda had my pride for dinner that night!!</li>
+                </ol>
+            </div>
+
+            <div class="signature">
+                Love always,<br>
+                E
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate random stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Reveal hidden section
+        function revealSection() {
+            const section = document.getElementById('hiddenSection');
+            const button = document.querySelector('.reveal-button');
+            section.classList.add('revealed');
+            button.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
